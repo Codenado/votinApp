@@ -11,7 +11,7 @@ var QuestionSchema = new Schema({
     ref: 'User'
   },
   choices: [ { name: String,  votes: { type: Number , default: 0  }} ],
-  voters:[{ voter_id: String}]
+  voters:[Schema.Types.ObjectId]
 })
 
 export default mongoose.model('Question', QuestionSchema)

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('votinApp')
-  .controller('QuestionsCtrl', function ($scope, $http, $stateParams) {
+  .controller('QuestionsCtrl', function ($scope, $http, $stateParams, Auth) {
     var url = '/api/questions/' + $stateParams.id
 
     $scope.data = {
@@ -9,11 +9,14 @@ angular.module('votinApp')
      group2 : '2',
      group3 : 'avatar-1'
    }
-
+   var user_id = Auth.getCurrentUser()._id
 
     $http.get(url).success(function(res){
           $scope.question = res
-          console.log(res)
+        $scope.voted = $scope.question.voters.filter(function(voter){
+            return user_id === voter.voter_id
+          }).pop()
+          console.log($scope.voted)
        }).error(function(error){
           console.log(error);
        })

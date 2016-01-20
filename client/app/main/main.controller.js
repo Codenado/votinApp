@@ -9,13 +9,13 @@ angular.module('votinApp')
 
     $http.get('api/questions').then(function(res){
       $scope.questions = res.data
-      console.log($scope.questions)
+
     })
 
     $scope.addNewChoice = function() {
       var newLabel = $scope.newQuestion.choices.length+1
       $scope.newQuestion.choices.push({ label: 'Choice #' + newLabel });
-      console.log($scope.newQuestion)
+  
    }
 
    $scope.addNewQuestion = function() {

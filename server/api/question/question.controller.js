@@ -76,21 +76,25 @@ export function show(req, res) {
 
 // Creates a new Question in the DB
 export function create(req, res) {
-  Question.createAsync(req.body)
-    .then(responseWithResult(res, 201))
-    .catch(handleError(res));
-}
+  delete req.body.date;
 
+  var question = new Question(_.merge({ author: req.user._id }, req.body));
+  question.save(function(err, comment) {
+    if(err) { return handleError(res, err); }
+    return res.json(201, comment)
+  })
+}
 // Updates an existing Question in the DB
 export function update(req, res) {
   Question.findOne({'_id': req.params.id}, function(err, question){
     var didVote = question.voters.filter(function(voter){
-      return voter.voter_id == req.user._id
-  })
+      return voter.equals(req.user._id)
+    }).pop()
 
-    if(didVote.length < 1){
+  console.log(didVote)
+    if(!didVote){
       console.log('here')
-      question.voters.push({ voter_id : req.user._id })
+      question.voters.push( req.user._id )
       var choice = question.choices.id(req.query.name)
       choice.votes += 1
       question.save(function(err, question){
