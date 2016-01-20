@@ -1,0 +1,14 @@
+<navbar></navbar>
+
+ <p>Selected Value: <span class="radioValue">{{ data.group1 }}</span> </p>
+  <md-radio-group ng-animate="'animate'" ng-model="data.group1">
+    <md-radio-button ng-repeat='choice in question.choices' value='{{choice._id}}'>{{choice.name}} -- {{choice.votes}}</md-radio-button>
+  </md-radio-group>
+
+
+
+    <md-button class="md-raised" ng-click="castVote()" type="button">Add</md-button>
+
+
+</form>
+</div>
