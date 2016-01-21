@@ -14,4 +14,14 @@ var QuestionSchema = new Schema({
   voters:[Schema.Types.ObjectId]
 })
 
+QuestionSchema.statics = {
+  loadRecent: function(cb) {
+    this.find({})
+      .populate({path:'author', select: 'name'})
+      .sort('-date')
+      .limit(10)
+      .exec(cb);
+  }
+}
+
 export default mongoose.model('Question', QuestionSchema)

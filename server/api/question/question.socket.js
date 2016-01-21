@@ -3,7 +3,7 @@
  */
 
 'use strict';
-
+var Question = require('./question.model');
 var QuestionEvents = require('./question.events');
 
 // Model events to emit
@@ -17,19 +17,24 @@ export function register(socket) {
 
     QuestionEvents.on(event, listener);
 
+    function onSave(socket, doc, cb) {
+      Question.populate(doc, {path:'author', select: 'name'}, function(err, question) {
+        socket.emit('question:save', question);
+      })
+    }
+
     socket.on('disconnect', removeListener(event, listener));
   }
 }
 
-function onSave(socket, doc, cb) {
-  Question.populate(doc, {path:'author', select: 'name'}, function(err, question) {
-    socket.emit('question:save', question);
-  })
-}
+
 
 function createListener(event, socket) {
   return function(doc) {
-    socket.emit(event, doc);
+    Question.populate(doc, {path:'author', select: 'name'}, function(err, question) {
+      socket.emit('question:save', question);
+    })
+    //socket.emit(event, doc);
   };
 }
 

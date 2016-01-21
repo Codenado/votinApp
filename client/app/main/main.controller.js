@@ -13,7 +13,14 @@ angular.module('votinApp')
 
     $http.get('api/questions').then(function(res){
       $scope.questions = res.data
-        socket.syncUpdates('question', $scope.questions)
+      socket.syncUpdates('question', $scope.questions, function(event, question, questions) {
+
+       questions.sort(function(a, b) {
+         a = new Date(a.date);
+         b = new Date(b.date);
+         return  a > b ? -1 : a < b ? 1 : 0;
+       })
+     })
     })
 
 

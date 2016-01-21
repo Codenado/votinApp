@@ -61,9 +61,10 @@ function removeEntity(res) {
 
 // Gets a list of Questions
 export function index(req, res) {
-  Question.findAsync()
-    .then(responseWithResult(res))
-    .catch(handleError(res));
+  Question.loadRecent(function (err, comments) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, comments);
+  })
 }
 
 // Gets a single Question from the DB
