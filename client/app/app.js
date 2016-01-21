@@ -12,7 +12,9 @@ angular.module('votinApp', [
   'ui.bootstrap',
   'validation.match',
   'ngMaterial',
-  'ngAnimate'
+  'ngAnimate',
+  'chart.js',
+  'ngMessages'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

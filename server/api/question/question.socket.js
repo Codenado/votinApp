@@ -16,10 +16,16 @@ export function register(socket) {
     var listener = createListener('question:' + event, socket);
 
     QuestionEvents.on(event, listener);
+
     socket.on('disconnect', removeListener(event, listener));
   }
 }
 
+function onSave(socket, doc, cb) {
+  Question.populate(doc, {path:'author', select: 'name'}, function(err, question) {
+    socket.emit('question:save', question);
+  })
+}
 
 function createListener(event, socket) {
   return function(doc) {

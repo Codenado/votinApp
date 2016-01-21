@@ -9,6 +9,7 @@
 </header>
 
 <div class='container'>
+  <div ng-show='loggedIn' class='new-question'>
   <div layout-gt-xs="row">
     <md-input-container>
     <h3>  <label>Title</label>
@@ -21,7 +22,7 @@
   </md-input-container>
   <md-button class="md-raised" ng-click="addNewQuestion()" type="button">submit</md-button>
     <md-button class="md-raised" ng-click="addNewChoice()" type="button">and new choice</md-button>
-
+</div>
 
 
 

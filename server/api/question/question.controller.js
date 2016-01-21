@@ -93,7 +93,6 @@ export function update(req, res) {
 
   console.log(didVote)
     if(!didVote){
-      console.log('here')
       question.voters.push( req.user._id )
       var choice = question.choices.id(req.query.name)
       choice.votes += 1

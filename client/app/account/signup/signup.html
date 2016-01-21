@@ -10,10 +10,11 @@
 
         <div class="form-group" ng-class="{ 'has-success': form.name.$valid && vm.submitted,
                                             'has-error': form.name.$invalid && vm.submitted }">
-          <label>Name</label>
+          <md-input-container class="md-block">
+            <label>Name</label>
+            <input required name="name" ng-model="vm.user.name" required>
+          </md-input-container>
 
-          <input type="text" name="name" class="form-control" ng-model="vm.user.name"
-                 required/>
           <p class="help-block" ng-show="form.name.$error.required && vm.submitted">
             A name is required
           </p>
@@ -21,11 +22,12 @@
 
         <div class="form-group" ng-class="{ 'has-success': form.email.$valid && vm.submitted,
                                             'has-error': form.email.$invalid && vm.submitted }">
-          <label>Email</label>
 
-          <input type="email" name="email" class="form-control" ng-model="vm.user.email"
-                 required
-                 mongoose-error/>
+                                            <md-input-container class="md-block">
+                                              <label>Email</label>
+                                              <input type='email' name="email" ng-model="vm.user.email" required>
+                                            </md-input-container>
+
           <p class="help-block" ng-show="form.email.$error.email && vm.submitted">
             Doesn't look like a valid email.
           </p>
@@ -39,12 +41,14 @@
 
         <div class="form-group" ng-class="{ 'has-success': form.password.$valid && vm.submitted,
                                             'has-error': form.password.$invalid && vm.submitted }">
-          <label>Password</label>
 
-          <input type="password" name="password" class="form-control" ng-model="vm.user.password"
-                 ng-minlength="3"
-                 required
-                 mongoose-error/>
+          <md-input-container class="md-block">
+            <label>Password</label>
+            <input type="password" name="password" ng-model="vm.user.password" ng-minlength="3"
+            required
+            mongoose-error>
+          </md-input-container>
+
           <p class="help-block"
              ng-show="(form.password.$error.minlength || form.password.$error.required) && vm.submitted">
             Password must be at least 3 characters.
@@ -56,10 +60,13 @@
 
         <div class="form-group" ng-class="{ 'has-success': form.confirmPassword.$valid && vm.submitted,
                                             'has-error': form.confirmPassword.$invalid && vm.submitted }">
-          <label>Confirm Password</label>
-          <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
-                 match="vm.user.password"
-                 ng-minlength="3" required/>
+
+           <md-input-container class="md-block">
+              <label>Confirm Password</label>
+              <input type="password" name="confirmPassword" ng-model="vm.user.confirmPassword" ng-minlength="3"
+              required match="vm.user.password">
+            </md-input-container>
+          
           <p class="help-block"
              ng-show="form.confirmPassword.$error.match && vm.submitted">
             Passwords must match.
