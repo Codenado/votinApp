@@ -20,9 +20,10 @@ angular.module('votinApp')
          b = new Date(b.date);
          return  a > b ? -1 : a < b ? 1 : 0;
        })
+       if(questions.length > 6)
+        questions.pop()
      })
     })
-
 
     $scope.addNewChoice = function() {
       var newLabel = $scope.newQuestion.choices.length+1
@@ -40,4 +41,11 @@ angular.module('votinApp')
     }
 
 
+
+
+  }).config(function($mdThemingProvider) {
+    // Configure a dark theme with primary foreground yellow
+    $mdThemingProvider.theme('docs-dark', 'default')
+      .primaryPalette('yellow')
+      .dark();
   })

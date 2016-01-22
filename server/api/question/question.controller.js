@@ -88,14 +88,8 @@ export function create(req, res) {
 // Updates an existing Question in the DB
 export function update(req, res) {
   Question.findOne({'_id': req.params.id}, function(err, question){
-    var didVote = question.voters.filter(function(voter){
-      return voter.equals(req.user._id)
-    }).pop()
-
-  console.log(didVote)
-    if(!didVote){
-      question.voters.push( req.user._id )
-      var choice = question.choices.id(req.query.name)
+      Question.totalVotes += 1
+      var choice = question.choices.id(req.query.vote)
       choice.votes += 1
       question.save(function(err, question){
         if (err){
@@ -103,7 +97,7 @@ export function update(req, res) {
         }
         return res.json(question)
       })
-    }
+
    })
 }
 

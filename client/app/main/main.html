@@ -1,37 +1,39 @@
 <navbar></navbar>
 
-<header class="hero-unit" id="banner">
+<header ng-show='!loggedIn' class="hero-unit" id="banner">
   <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
+    <h1>Welcome to Votin!</h1>
+    <p class="lead">The app for all of your voting needs.</p>
+    <p>Created with:</p>
     <img src="assets/images/yeoman.png" alt="I'm Yeoman">
   </div>
 </header>
 
 <div class='container'>
-  <div ng-show='loggedIn' class='new-question'>
-  <div layout-gt-xs="row">
-    <md-input-container>
-    <h3>  <label>Title</label>
-      <input ng-model="newQuestion.title">
-    </md-input-container></h3>
-  </div>
-  <md-input-container class="md-block" flex-gt-sm ng-repeat='choice in newQuestion.choices'>
-    <label>{{choice.label}}</label>
-    <input ng-model="choice.name">
-  </md-input-container>
-  <md-button class="md-raised" ng-click="addNewQuestion()" type="button">submit</md-button>
-    <md-button class="md-raised" ng-click="addNewChoice()" type="button">and new choice</md-button>
-</div>
+
+  <form ng-show='loggedIn' name="questionForm" class='md-inline-form new-question'>
+     <div>
+     <md-input-container>
+      <label>Title</label>
+       <input ng-model="newQuestion.title" required>
+     </md-input-container>
+   </div>
+   <md-input-container class="md-block item" flex-gt-sm ng-repeat='choice in newQuestion.choices'>
+     <label>{{choice.label}}</label>
+     <input ng-model="choice.name" required>
+   </md-input-container>
+   <md-button ng-disabled="questionForm.$invalid" class="md-raised" ng-click="addNewQuestion()" type="button">Publish it!</md-button>
+     <md-button class="md-raised" ng-click="addNewChoice()" type="button">More choices</md-button>
+ </form>
 
 
 
 
-  <div class="row">
+
+  <div class="row questions">
     <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
       <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="question in questions">
-        <li><a href="/questions/{{ question._id }}" >{{question.title}}</a> {{question.voters.length}} {{question.author.name}}</li>
+        <li><h4><a href="/questions/{{ question._id }}">{{question.title}}</a></h4>Created by : {{question.author.name}}</li>
       </ul>
     </div>
   </div>

@@ -30,4 +30,45 @@
   text-align: center;
   max-width:500px;
   margin:auto;
+  border-radius: 40px;
+  border-style: outset;
+  border: 5px;
+  padding: 30px;
+  background-color: #fff;
+  border-color:#000;
+
+}
+
+.questions{
+  margin-top: 30px;
+  background-color: #fff;
+  border-radius: 40px;
+  padding: 15px;
+}
+
+.item {
+
+  margin-top:15px;
+  padding:15px;
+
+  color:#fff;
+}
+
+.item.ng-move,
+.item.ng-enter,
+.item.ng-leave {
+  -webkit-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+}
+
+.item.ng-leave.ng-leave-active,
+.item.ng-move,
+.item.ng-enter {
+  opacity:0;
+}
+
+.item.ng-leave,
+.item.ng-move.ng-move-active,
+.item.ng-enter.ng-enter-active {
+  opacity:1;
 }

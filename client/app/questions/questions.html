@@ -1,18 +1,21 @@
 <navbar></navbar>
-
+<h3 class='title'>{{question.title}}</h3>
+<div ng-show='!didVote' class='poll'>
  <p>Selected Value: <span class="radioValue">{{ data.group1 }}</span> </p>
-  <md-radio-group ng-animate="'animate'" ng-model="data.group1">
+  <md-radio-group ng-animate="'animate'" ng-model="sendVote">
     <md-radio-button ng-repeat='choice in question.choices' value='{{choice._id}}'>{{choice.name}} -- {{choice.votes}}</md-radio-button>
   </md-radio-group>
 
 
 
-    <md-button class="md-raised" ng-click="castVote()" type="button">Add</md-button>
+    <md-button  ng-disabled="!sendVote"class="md-raised" ng-click="castVote()" type="button">Add</md-button>
+</div>
 
 
-
+<div ng-show='didVote' class='results'>
 
 
     <canvas id="doughnut" class="chart chart-doughnut"
       chart-data="votes" chart-labels="names">
     </canvas>
+</div>

@@ -1,56 +1,68 @@
 'use strict';
 
 angular.module('votinApp')
-  .controller('QuestionsCtrl', function ($scope, $http, $stateParams, Auth, socket) {
+  .controller('QuestionsCtrl', function ($scope, $http, $stateParams, socket, $localStorage) {
     var url = '/api/questions/' + $stateParams.id
+    $scope.didVote = true
+
+    if(!$localStorage.votes){
+      console.log($localStorage.votes)
+      $localStorage.votes = []
+    }
 
 
 
-    $scope.dati = {
-     group1 : 'Banana',
-     group2 : '2',
-     group3 : 'avatar-1'
-   }
-
- $scope.questions = []
+    $scope.questions = []
 
 
-   var user_id = Auth.getCurrentUser()._id
 
     $http.get(url).success(function(res){
       $scope.question = res
       update(res)
+        checkVote()
+        console.log($scope.didVote)
       socket.syncUpdates('question', $scope.questions, function(event, question, questions){
-      if (question._id === $scope.question._id ){
-
-        update(question)
-      }
-
-       })
+        if (question._id === $scope.question._id ){
+          update(question)
+        }
+      })
     }).error(function(error){
           console.log(error);
        })
 
       $scope.castVote = function(){
-        var vote = $.param( $scope.data.group1 )
-        $http.put('/api/questions/' + $stateParams.id + "?name="  + $scope.data.group1)
+        $scope.didVote = true
+
+        $http.put(url + "?vote="  + $scope.sendVote)
           .success(function(){
-            console.log('success')
+            $localStorage.votes.push($scope.question._id)
+          //  console.log($localStorage.votes)
           })
           .error(function(error){
               console.log(error);
            })
       }
 
-       function update(question){
-
-         $scope.question = question
+      function update(question){
+        $scope.question = question
         $scope.votes = []
         $scope.names = []
          _.map(question.choices, function(value, index){
-
-        $scope.votes.push(value.votes)
-        $scope.names.push(value.name)
+           $scope.votes.push(value.votes)
+           $scope.names.push(value.name)
         })
       }
+
+      function checkVote(){
+        console.log('hello')
+        console.log($localStorage.votes)
+      var check = $localStorage.votes.filter(function(vote){
+        console.log(vote === $scope.question._id)
+          return vote === $scope.question._id
+        }).pop()
+        if(!check){
+        $scope.didVote = false
+}
+      }
+
 })

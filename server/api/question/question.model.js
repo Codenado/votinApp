@@ -10,8 +10,8 @@ var QuestionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  choices: [ { name: String,  votes: { type: Number , default: 0  }} ],
-  voters:[Schema.Types.ObjectId]
+  choices: [{ name: String,  votes: { type: Number , default: 0  }} ],
+  totalVotes: { type: Number , default: 0  }
 })
 
 QuestionSchema.statics = {
@@ -19,7 +19,7 @@ QuestionSchema.statics = {
     this.find({})
       .populate({path:'author', select: 'name'})
       .sort('-date')
-      .limit(10)
+      .limit(6)
       .exec(cb);
   }
 }

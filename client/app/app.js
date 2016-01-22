@@ -14,7 +14,8 @@ angular.module('votinApp', [
   'ngMaterial',
   'ngAnimate',
   'chart.js',
-  'ngMessages'
+  'ngMessages',
+  'ngStorage'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider
